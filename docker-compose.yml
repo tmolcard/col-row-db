@@ -1,0 +1,23 @@
+services:
+
+  postgres-db:
+    image: postgres:15.1
+    container_name: postgres-container
+    ports:
+      - "15432:5432" # Exposes database on port 15432 (default clickhouse port: 5432) - Can be changed if in use
+    environment:
+      # Values defined in .env
+      POSTGRES_USER: "${PGUSER}"
+      POSTGRES_PASSWORD: "${PGPASSWORD}"
+      POSTGRES_DB: "${PGDATABASE}"
+
+  clickhouse-db:
+    image: clickhouse/clickhouse-server:22.8
+    container_name: clickhouse-container
+    ports:
+      - "18123:8123" # Exposes database on port 18123 (default clickhouse port: 8123) - Can be changed if in use
+    environment:
+      # Values defined in .env
+      CLICKHOUSE_USER: "${CHUSER}"
+      CLICKHOUSE_PASSWORD: "${CHPASSWORD}"
+      CLICKHOUSE_DB: "${CHDATABASE}"
