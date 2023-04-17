@@ -1,0 +1,7 @@
+numpy==1.24.2
+pandas==2.0.0
+SQLAlchemy==1.4.47
+alembic==1.10.3
+psycopg2==2.9.6
+clickhouse-driver==0.2.5
+clickhouse-sqlalchemy==0.2.3
