@@ -9,6 +9,9 @@ from sqlalchemy import pool
 from alembic import context
 from clickhouse_sqlalchemy.alembic.dialect import patch_alembic_version
 
+from data_manipulation.postgres_model import PGBase
+from data_manipulation.clickhouse_model import CHBase
+
 USE_TWOPHASE = False
 
 # this is the Alembic Config object, which provides
@@ -49,7 +52,10 @@ db_names = config.get_main_option("databases", "")
 #       'engine1':mymodel.metadata1,
 #       'engine2':mymodel.metadata2
 # }
-target_metadata = {}
+target_metadata = {
+    # 'postgresql': PGBase.metadata,
+    # 'clickhouse': CHBase.metadata,
+}
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

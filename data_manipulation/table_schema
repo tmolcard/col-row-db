@@ -1,0 +1,86 @@
+"""from sqlalchemy import MetaData, Table, Column
+from sqlalchemy.types import Integer, String, Boolean, Date, ARRAY
+
+metadata_obj = MetaData()
+
+title_akas = Table(
+    "title_akas",
+    metadata_obj,
+    Column("titleId", String(256), primary_key=True),
+    Column("ordering", Integer, nullable=False),
+    Column("title", String(256), nullable=False),
+    Column("region", String(256), nullable=False),
+    Column("language", String(256), nullable=False),
+    Column("types", ARRAY(String(256)), nullable=False),
+    Column("attributes", ARRAY(String(256)), nullable=False),
+    Column("isOriginalTitle", Boolean, nullable=False)
+)
+
+title_basics = Table(
+    "title_basics",
+    metadata_obj,
+    Column("tconst", String(256), primary_key=True),
+    Column("titleType", String(256), nullable=False),
+    Column("primaryTitle", String(256), nullable=False),
+    Column("originalTitle", String(256), nullable=False),
+    Column("isAdult", Boolean, nullable=False),
+    Column("startYear", Integer, nullable=False),
+    Column("endYear", Integer, nullable=True),
+    Column("runtimeMinutes", Integer, nullable=False),
+    Column("genres", ARRAY(String(256)), nullable=False)
+)
+
+title_crew = Table(
+    "title_crew",
+    metadata_obj,
+    Column("tconst", String(256), primary_key=False),
+    Column("directors", ARRAY(String(256)), nullable=False, foreign),
+    Column("writers", ARRAY(String(256)), nullable=False),
+)
+
+.tsv.gz – Contains the director and writer information for all the titles in IMDb. Fields include:
+
+    tconst (string) - alphanumeric unique identifier of the title
+    directors (array of nconsts) - director(s) of the given title
+    writers (array of nconsts) – writer(s) of the given title
+
+title_episode = Table(
+    "title_episode",
+    metadata_obj,
+
+
+).tsv.gz – Contains the tv episode information. Fields include:
+
+    tconst (string) - alphanumeric identifier of episode
+    parentTconst (string) - alphanumeric identifier of the parent TV Series
+    seasonNumber (integer) – season number the episode belongs to
+    episodeNumber (integer) – episode number of the tconst in the TV series
+
+title.principals.tsv.gz – Contains the principal cast/crew for titles
+
+    tconst (string) - alphanumeric unique identifier of the title
+    ordering (integer) – a number to uniquely identify rows for a given titleId
+    nconst (string) - alphanumeric unique identifier of the name/person
+    category (string) - the category of job that person was in
+    job (string) - the specific job title if applicable, else '\N'
+    characters (string) - the name of the character played if applicable, else '\N'
+
+title.ratings.tsv.gz – Contains the IMDb rating and votes information for titles
+
+    tconst (string) - alphanumeric unique identifier of the title
+    averageRating – weighted average of all the individual user ratings
+    numVotes - number of votes the title has received
+
+name_basics = Table(
+    "name_basics",
+    metadata_obj,
+
+
+).tsv.gz – Contains the following information for names:
+
+    nconst (string) - alphanumeric unique identifier of the name/person
+    primaryName (string)– name by which the person is most often credited
+    birthYear – in Integer format
+    deathYear – in Integer format if applicable, else '\N'
+    primaryProfession (array of strings)– the top-3 professions of the person
+    knownForTitles (array of tconsts) – titles the person is known for"""

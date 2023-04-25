@@ -5,3 +5,8 @@ alembic==1.10.3
 psycopg2==2.9.6
 clickhouse-driver==0.2.5
 clickhouse-sqlalchemy==0.2.3
+
+# dev
+pylint
+flake8
+mypy
