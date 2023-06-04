@@ -53,8 +53,8 @@ db_names = config.get_main_option("databases", "")
 #       'engine2':mymodel.metadata2
 # }
 target_metadata = {
-    # 'postgresql': PGBase.metadata,
-    # 'clickhouse': CHBase.metadata,
+    'postgresql': PGBase.metadata,
+    'clickhouse': CHBase.metadata,
 }
 
 # other values from the config, defined by the needs of env.py,

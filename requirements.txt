@@ -3,8 +3,8 @@ pandas==2.0.0
 SQLAlchemy==1.4.47
 alembic==1.10.3
 psycopg2==2.9.6
-clickhouse-driver==0.2.5
-clickhouse-sqlalchemy==0.2.3
+clickhouse-driver==0.2.6
+clickhouse-sqlalchemy==0.2.4
 
 # dev
 pylint
