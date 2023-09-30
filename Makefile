@@ -16,15 +16,15 @@ help:
 
 .PHONY: apply_pylint
 apply_pylint:
-	@./.venv/bin/python -m pylint ./data_manipulation --max-line-length=120
+	@./.venv/bin/python -m pylint ./source ./config --max-line-length=120 --disable=too-few-public-methods,R0801 --good-names=df,ad,i,n,k
 
 .PHONY: apply_flake8
 apply_flake8:
-	@./.venv/bin/python -m flake8 ./data_manipulation
+	@./.venv/bin/python -m flake8 ./source ./config --max-line-length=120
 
 .PHONY: apply_mypy
 apply_mypy:
-	@./.venv/bin/python -m mypy ./data_manipulation --ignore-missing-import
+	@./.venv/bin/python -m mypy ./source ./config --ignore-missing-import
 
 
 
@@ -43,3 +43,21 @@ local_db_stop:
 local_db_down:
 	docker-compose down
 
+
+.PHONY: upload_datasets_to_pg  ## Upload title_ratings, title_basics & title_akas to Postgres
+upload_datasets_to_pg:
+	echo "- Upload title_ratings"
+	@./.venv/bin/python ./source/usecase/upload_data_pg.py --dataset=title_ratings
+	echo "- Upload title_basics"
+	@./.venv/bin/python ./source/usecase/upload_data_pg.py --dataset=title_basics
+	echo "- Upload title_akas"
+	@./.venv/bin/python ./source/usecase/upload_data_pg.py --dataset=title_akas
+
+.PHONY: upload_datasets_to_ch  ## Upload title_ratings, title_basics & title_akas to Clickhouse
+upload_datasets_to_ch:
+	@echo "- Upload title_ratings"
+	@./.venv/bin/python ./source/usecase/upload_data_ch.py --dataset=title_ratings
+	@echo "- Upload title_basics"
+	@./.venv/bin/python ./source/usecase/upload_data_ch.py --dataset=title_basics
+	@echo "- Upload title_akas"
+	@./.venv/bin/python ./source/usecase/upload_data_ch.py --dataset=title_akas

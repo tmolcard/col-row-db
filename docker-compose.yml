@@ -10,6 +10,10 @@ services:
       POSTGRES_USER: "${PGUSER}"
       POSTGRES_PASSWORD: "${PGPASSWORD}"
       POSTGRES_DB: "${PGDATABASE}"
+    deploy:
+      resources:
+        limits:
+          memory: 8G
 
   clickhouse-db:
     image: clickhouse/clickhouse-server:22.8
@@ -22,3 +26,7 @@ services:
       CLICKHOUSE_USER: "${CHUSER}"
       CLICKHOUSE_PASSWORD: "${CHPASSWORD}"
       CLICKHOUSE_DB: "${CHDATABASE}"
+    deploy:
+      resources:
+        limits:
+          memory: 16G

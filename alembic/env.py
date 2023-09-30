@@ -1,6 +1,5 @@
 import logging
 from logging.config import fileConfig
-import os
 import re
 
 from sqlalchemy import engine_from_config
@@ -9,8 +8,10 @@ from sqlalchemy import pool
 from alembic import context
 from clickhouse_sqlalchemy.alembic.dialect import patch_alembic_version
 
-from data_manipulation.postgres_model import PGBase
-from data_manipulation.clickhouse_model import CHBase
+from config.config_ch import CHHOST, CHPORT, CHUSER, CHDATABASE, CHPASSWORD
+from config.config_pg import PGHOST, PGPORT, PGUSER, PGDATABASE, PGPASSWORD
+from data_model.postgres_model import PGBase
+from data_model.clickhouse_model import CHBase
 
 USE_TWOPHASE = False
 
@@ -21,13 +22,13 @@ config = context.config
 config.set_section_option(
     'postgresql',
     'sqlalchemy.url',
-    f"postgresql://{os.getenv('PGUSER')}:{os.getenv('PGPASSWORD')}@{os.getenv('PGHOST')}:{os.getenv('PGPORT')}/{os.getenv('PGDATABASE')}"
+    f"postgresql://{PGUSER}:{PGPASSWORD}@{PGHOST}:{PGPORT}/{PGDATABASE}"
 )
 
 config.set_section_option(
     'clickhouse',
     'sqlalchemy.url',
-    f"clickhouse+native://{os.getenv('CHUSER')}:{os.getenv('CHPASSWORD')}@{os.getenv('CHHOST')}:{os.getenv('CHPORT')}/{os.getenv('CHDATABASE')}"
+    f"clickhouse+native://{CHUSER}:{CHPASSWORD}@{CHHOST}:{CHPORT}/{CHDATABASE}"
 )
 
 # Interpret the config file for Python logging.

@@ -29,68 +29,68 @@ def upgrade_postgresql() -> None:
     op.create_table(
         'name_basics',
         sa.Column('nconst', sa.String(length=256), nullable=False),
-        sa.Column('primary_name', sa.String(length=256), nullable=False),
-        sa.Column('birth_year', sa.String(length=256), nullable=False),
+        sa.Column('primary_name', sa.String(length=256), nullable=True),
+        sa.Column('birth_year', sa.String(length=256), nullable=True),
         sa.Column('death_year', sa.String(length=256), nullable=True),
-        sa.Column('primary_profession', sa.ARRAY(sa.String(length=256)), nullable=False),
-        sa.Column('known_for_titles', sa.ARRAY(sa.String(length=256)), nullable=False),
+        sa.Column('primary_profession', sa.ARRAY(sa.String(length=256)), nullable=True),
+        sa.Column('known_for_titles', sa.ARRAY(sa.String(length=256)), nullable=True),
         sa.PrimaryKeyConstraint('nconst')
     )
     op.create_table(
         'title_akas',
         sa.Column('title_id', sa.String(length=256), nullable=False),
-        sa.Column('ordering', sa.Integer(), nullable=False),
-        sa.Column('title', sa.String(length=256), nullable=False),
-        sa.Column('region', sa.String(length=256), nullable=False),
-        sa.Column('language', sa.String(length=256), nullable=False),
-        sa.Column('types', sa.ARRAY(sa.String(length=256)), nullable=False),
-        sa.Column('attributes', sa.ARRAY(sa.String(length=256)), nullable=False),
-        sa.Column('is_original_title', sa.Boolean(), nullable=False),
-        sa.PrimaryKeyConstraint('title_id')
+        sa.Column('ordering', sa.Integer(), nullable=True),
+        sa.Column('title', sa.String(length=256), nullable=True),
+        sa.Column('region', sa.String(length=256), nullable=True),
+        sa.Column('language', sa.String(length=256), nullable=True),
+        sa.Column('types', sa.ARRAY(sa.String(length=256)), nullable=True),
+        sa.Column('attributes', sa.ARRAY(sa.String(length=256)), nullable=True),
+        sa.Column('is_original_title', sa.Boolean(), nullable=True),
+        sa.PrimaryKeyConstraint('title_id', 'ordering')
     )
     op.create_table(
         'title_basics',
         sa.Column('tconst', sa.String(length=256), nullable=False),
-        sa.Column('title_type', sa.String(length=256), nullable=False),
-        sa.Column('primary_title', sa.String(length=256), nullable=False),
-        sa.Column('original_title', sa.String(length=256), nullable=False),
-        sa.Column('is_adult', sa.Boolean(), nullable=False),
-        sa.Column('start_year', sa.Integer(), nullable=False),
+        sa.Column('title_type', sa.String(length=256), nullable=True),
+        sa.Column('primary_title', sa.String(length=256), nullable=True),
+        sa.Column('original_title', sa.String(length=256), nullable=True),
+        sa.Column('is_adult', sa.Boolean(), nullable=True),
+        sa.Column('start_year', sa.Integer(), nullable=True),
         sa.Column('end_year', sa.Integer(), nullable=True),
-        sa.Column('runtime_minutes', sa.Integer(), nullable=False),
-        sa.Column('genres', sa.ARRAY(sa.String(length=256)), nullable=False),
+        sa.Column('runtime_minutes', sa.Integer(), nullable=True),
+        sa.Column('genres', sa.ARRAY(sa.String(length=256)), nullable=True),
         sa.PrimaryKeyConstraint('tconst')
     )
     op.create_table(
         'title_crew',
         sa.Column('tconst', sa.String(length=256), nullable=False),
-        sa.Column('directors', sa.ARRAY(sa.String(length=256)), nullable=False),
-        sa.Column('writers', sa.ARRAY(sa.String(length=256)), nullable=False),
+        sa.Column('directors', sa.ARRAY(sa.String(length=256)), nullable=True),
+        sa.Column('writers', sa.ARRAY(sa.String(length=256)), nullable=True),
         sa.PrimaryKeyConstraint('tconst')
     )
     op.create_table(
         'title_episode',
         sa.Column('tconst', sa.String(length=256), nullable=False),
-        sa.Column('parent_tconst', sa.String(length=256), nullable=False),
-        sa.Column('season_number', sa.Integer(), nullable=False),
-        sa.Column('episode_number', sa.Integer(), nullable=False),
+        sa.Column('parent_tconst', sa.String(length=256), nullable=True),
+        sa.Column('season_number', sa.Integer(), nullable=True),
+        sa.Column('episode_number', sa.Integer(), nullable=True),
         sa.PrimaryKeyConstraint('tconst')
     )
     op.create_table(
         'title_principals',
         sa.Column('tconst', sa.String(length=256), nullable=False),
-        sa.Column('ordering', sa.Integer(), nullable=False),
-        sa.Column('nconst', sa.String(length=256), nullable=False),
-        sa.Column('category', sa.String(length=256), nullable=False),
-        sa.Column('job', sa.String(length=256), nullable=True),
-        sa.Column('characters', sa.String(length=256), nullable=True),
-        sa.PrimaryKeyConstraint('tconst')
+        sa.Column('ordering', sa.Integer(), nullable=True),
+        sa.Column('nconst', sa.String(length=256), nullable=True),
+        sa.Column('category', sa.String(length=256), nullable=True),
+        sa.Column('job', sa.String(length=512), nullable=True),
+        sa.Column('characters', sa.String(length=512), nullable=True),
+        sa.PrimaryKeyConstraint('tconst', 'ordering'),
     )
     op.create_table(
         'title_ratings',
         sa.Column('tconst', sa.String(length=256), nullable=False),
-        sa.Column('average_rating', sa.Float(), nullable=False),
-        sa.Column('num_votes', sa.Integer(), nullable=False),
+        sa.Column('average_rating', sa.Float(), nullable=True),
+        sa.Column('num_votes', sa.Integer(), nullable=True),
         sa.PrimaryKeyConstraint('tconst')
     )
     # ### end Alembic commands ###

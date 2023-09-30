@@ -43,48 +43,48 @@ def upgrade_clickhouse() -> None:
     op.create_table(
         'name_basics',
         sa.Column('nconst', ch_sa.types.common.String(length=256), nullable=False),
-        sa.Column('primary_name', ch_sa.types.common.String(length=256), nullable=False),
-        sa.Column('birth_year', ch_sa.types.common.String(length=256), nullable=False),
+        sa.Column('primary_name', ch_sa.types.common.String(length=256), nullable=True),
+        sa.Column('birth_year', ch_sa.types.common.String(length=256), nullable=True),
         sa.Column('death_year', ch_sa.types.common.String(length=256), nullable=True),
         sa.Column('primary_profession', ch_sa.types.common.Array(
             ch_sa.types.common.String(length=256)
-        ), nullable=False),
+        ), nullable=True),
         sa.Column('known_for_titles', ch_sa.types.common.Array(
             ch_sa.types.common.String(length=256)
-        ), nullable=False),
+        ), nullable=True),
         sa.PrimaryKeyConstraint('nconst'),
         MergeTree(primary_key='nconst')
     )
     op.create_table(
         'title_akas',
         sa.Column('title_id', ch_sa.types.common.String(length=256), nullable=False),
-        sa.Column('ordering', ch_sa.types.common.Int(), nullable=False),
-        sa.Column('title', ch_sa.types.common.String(length=256), nullable=False),
-        sa.Column('region', ch_sa.types.common.String(length=256), nullable=False),
-        sa.Column('language', ch_sa.types.common.String(length=256), nullable=False),
+        sa.Column('ordering', ch_sa.types.common.Int(), nullable=True),
+        sa.Column('title', ch_sa.types.common.String(length=256), nullable=True),
+        sa.Column('region', ch_sa.types.common.String(length=256), nullable=True),
+        sa.Column('language', ch_sa.types.common.String(length=256), nullable=True),
         sa.Column('types', ch_sa.types.common.Array(
             ch_sa.types.common.String(length=256)
-        ), nullable=False),
+        ), nullable=True),
         sa.Column('attributes', ch_sa.types.common.Array(
             ch_sa.types.common.String(length=256)
-        ), nullable=False),
-        sa.Column('is_original_title', ch_sa.types.common.Boolean(), nullable=False),
-        sa.PrimaryKeyConstraint('title_id'),
+        ), nullable=True),
+        sa.Column('is_original_title', ch_sa.types.common.Boolean(), nullable=True),
+        sa.PrimaryKeyConstraint('title_id', 'ordering'),
         MergeTree(primary_key='title_id')
     )
     op.create_table(
         'title_basics',
         sa.Column('tconst', ch_sa.types.common.String(length=256), nullable=False),
-        sa.Column('title_type', ch_sa.types.common.String(length=256), nullable=False),
-        sa.Column('primary_title', ch_sa.types.common.String(length=256), nullable=False),
-        sa.Column('original_title', ch_sa.types.common.String(length=256), nullable=False),
-        sa.Column('is_adult', ch_sa.types.common.Boolean(), nullable=False),
-        sa.Column('start_year', ch_sa.types.common.Int(), nullable=False),
+        sa.Column('title_type', ch_sa.types.common.String(length=256), nullable=True),
+        sa.Column('primary_title', ch_sa.types.common.String(length=256), nullable=True),
+        sa.Column('original_title', ch_sa.types.common.String(length=256), nullable=True),
+        sa.Column('is_adult', ch_sa.types.common.Boolean(), nullable=True),
+        sa.Column('start_year', ch_sa.types.common.Int(), nullable=True),
         sa.Column('end_year', ch_sa.types.common.Int(), nullable=True),
-        sa.Column('runtime_minutes', ch_sa.types.common.Int(), nullable=False),
+        sa.Column('runtime_minutes', ch_sa.types.common.Int(), nullable=True),
         sa.Column('genres', ch_sa.types.common.Array(
             ch_sa.types.common.String(length=256)
-        ), nullable=False),
+        ), nullable=True),
         sa.PrimaryKeyConstraint('tconst'),
         MergeTree(primary_key='tconst')
     )
@@ -93,38 +93,38 @@ def upgrade_clickhouse() -> None:
         sa.Column('tconst', ch_sa.types.common.String(length=256), nullable=False),
         sa.Column('directors', ch_sa.types.common.Array(
             ch_sa.types.common.String(length=256)
-        ), nullable=False),
+        ), nullable=True),
         sa.Column('writers', ch_sa.types.common.Array(
             ch_sa.types.common.String(length=256)
-        ), nullable=False),
+        ), nullable=True),
         sa.PrimaryKeyConstraint('tconst'),
         MergeTree(primary_key='tconst')
     )
     op.create_table(
         'title_episode',
         sa.Column('tconst', ch_sa.types.common.String(length=256), nullable=False),
-        sa.Column('parent_tconst', ch_sa.types.common.String(length=256), nullable=False),
-        sa.Column('season_number', ch_sa.types.common.Int(), nullable=False),
-        sa.Column('episode_number', ch_sa.types.common.Int(), nullable=False),
+        sa.Column('parent_tconst', ch_sa.types.common.String(length=256), nullable=True),
+        sa.Column('season_number', ch_sa.types.common.Int(), nullable=True),
+        sa.Column('episode_number', ch_sa.types.common.Int(), nullable=True),
         sa.PrimaryKeyConstraint('tconst'),
         MergeTree(primary_key='tconst')
     )
     op.create_table(
         'title_principals',
         sa.Column('tconst', ch_sa.types.common.String(length=256), nullable=False),
-        sa.Column('ordering', ch_sa.types.common.Int(), nullable=False),
-        sa.Column('nconst', ch_sa.types.common.String(length=256), nullable=False),
-        sa.Column('category', ch_sa.types.common.String(length=256), nullable=False),
-        sa.Column('job', ch_sa.types.common.String(length=256), nullable=True),
-        sa.Column('characters', ch_sa.types.common.String(length=256), nullable=True),
-        sa.PrimaryKeyConstraint('tconst'),
+        sa.Column('ordering', ch_sa.types.common.Int(), nullable=True),
+        sa.Column('nconst', ch_sa.types.common.String(length=256), nullable=True),
+        sa.Column('category', ch_sa.types.common.String(length=256), nullable=True),
+        sa.Column('job', ch_sa.types.common.String(length=512), nullable=True),
+        sa.Column('characters', ch_sa.types.common.String(length=512), nullable=True),
+        sa.PrimaryKeyConstraint('tconst', 'ordering'),
         MergeTree(primary_key='tconst')
     )
     op.create_table(
         'title_ratings',
         sa.Column('tconst', ch_sa.types.common.String(length=256), nullable=False),
-        sa.Column('average_rating', ch_sa.types.common.Float(), nullable=False),
-        sa.Column('num_votes', ch_sa.types.common.Int(), nullable=False),
+        sa.Column('average_rating', ch_sa.types.common.Float(), nullable=True),
+        sa.Column('num_votes', ch_sa.types.common.Int(), nullable=True),
         sa.PrimaryKeyConstraint('tconst'),
         MergeTree(primary_key='tconst')
     )
