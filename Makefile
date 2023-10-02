@@ -16,7 +16,7 @@ help:
 
 .PHONY: apply_pylint
 apply_pylint:
-	@./.venv/bin/python -m pylint ./source ./config --max-line-length=120 --disable=too-few-public-methods,R0801 --good-names=df,ad,i,n,k
+	@./.venv/bin/python -m pylint ./source ./config --max-line-length=120 --disable=too-few-public-methods,R0801,W1203 --good-names=df,ad,i,n,k
 
 .PHONY: apply_flake8
 apply_flake8:

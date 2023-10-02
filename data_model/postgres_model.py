@@ -2,6 +2,7 @@
 from sqlalchemy import Column
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.types import Boolean, Integer, Float, String, ARRAY
+from sqlalchemy.schema import Index
 
 PGBase = declarative_base()
 
@@ -20,6 +21,9 @@ class TitleAkas(PGBase):  # type: ignore
     is_original_title = Column("is_original_title", Boolean, nullable=False)
 
 
+Index('title_akas_title_index', TitleAkas.title)
+
+
 class TitleBasics(PGBase):  # type: ignore
     """Title basics table"""
     __tablename__ = "title_basics"
@@ -33,6 +37,9 @@ class TitleBasics(PGBase):  # type: ignore
     end_year = Column("end_year", Integer, nullable=True)
     runtime_minutes = Column("runtime_minutes", Integer, nullable=False)
     genres = Column("genres", ARRAY(String(256)), nullable=False)
+
+
+Index('title_basics_primary_title_index', TitleBasics.primary_title)
 
 
 class TitleCrew(PGBase):  # type: ignore

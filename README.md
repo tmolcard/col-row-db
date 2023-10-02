@@ -33,11 +33,30 @@ pip install -r requirements.txt
 Run alembic migration.
 
 ```bash
-alembic upgrade head
+alembic upgrade b1fe2784ca6f
 ```
 
-Reverse migration.
+Upload datasets
 
 ```bash
-alembic downgrade -1
+make upload_datasets_to_pg
+make upload_datasets_to_ch
 ```
+
+## Compare query executions
+
+#### Measure query on Postgres execution time
+
+Update and run ./source/usecase/time_query_pg.py
+
+#### Add index
+
+Run the following command in order to add index on title_basics(primary_title) and title_akas(title) and try to time queries again.
+
+```bash
+alembic upgrade ba3f0e134532
+```
+
+#### Measure query on Clickhouse execution time
+
+Update and run ./source/usecase/time_query_ch.py
